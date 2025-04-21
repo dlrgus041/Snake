@@ -9,11 +9,7 @@ background2:setFillColor(0, 0, 0)
 local board = display.newGroup()
 for x = 1, 30 do
     local col = display.newGroup()
-    for y = 1, 30 do
-        local grid = display.newRect(col, 30 + 15 * (2 * x - 1), 30 + 15 * (2 * y - 1), 30, 30)
-        grid:setFillColor(0, 0, 0)
-        -- if ((x + y) % 2 > 0) then grid:setFillColor(0.6, 0.6, 0.6, 0.2) else grid:setFillColor(0.4, 0.4, 0.4, 0.2) end
-    end
+    for y = 1, 30 do display.newRect(col, 30 + 15 * (2 * x - 1), 30 + 15 * (2 * y - 1), 30, 30) end
     board:insert(col)
 end
 
@@ -21,7 +17,22 @@ local appleImg = display.newCircle(480, 480, 10)
 appleImg:setFillColor(1, 1, 1)
 appleImg.isVisible = false
 
--- game over screen
+-- screen
+
+-- intro
+local intro = {
+    [11] = {4, 5, 6, 7, 9, 12, 15, 16, 19, 22, 24, 25, 26, 27},
+    [12] = {4, 9, 12, 14, 17, 19, 21, 24},
+    [13] = {4, 5, 6, 7, 9, 10, 12, 14, 15, 16, 17, 19, 20, 24, 25, 26},
+    [14] = {7, 9, 11, 12, 14, 17, 19, 21, 24},
+    [15] = {4, 5, 6, 7, 9, 12, 14, 17, 19, 22, 24, 25, 26, 27},
+    [23] = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22},
+    [24] = {9, 22},
+    [25] = {9, 22},
+    [26] = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22},
+}
+
+-- game over
 local white = {
     [2] = {4, 5, 6, 12, 17, 21, 24, 25, 26, 27, 28},
     [3] = {3, 7, 11, 13, 17, 18, 20, 21, 24, 28},
@@ -37,11 +48,86 @@ local white = {
     [15] = {3, 7, 11, 13, 17, 24, 26},
     [16] = {3, 7, 11, 13, 17, 21, 24, 27},
     [17] = {4, 5, 6, 12, 17, 18, 19, 20, 21, 24, 28},
-    [22] = {5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
-    [23] = {5, 8, 11, 14, 17, 20, 23, 26},
-    [24] = {5, 8, 11, 14, 17, 20, 23, 26},
-    [25] = {5, 8, 11, 14, 17, 20, 23, 26},
-    [26] = {5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
+    [22] = {}, --{5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
+    [23] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
+    [24] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
+    [25] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
+    [26] = {}, --{5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
+}
+
+local whiteX = {22, 16, 10, 4}
+
+local number = {
+    [0] = {
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 4},
+        {1, 4},
+        {1, 2, 3, 4}
+    },
+    [1] = {
+        {2, 3},
+        {2, 3},
+        {2, 3},
+        {2, 3},
+        {2, 3},
+    },
+    [2] = {
+        {1, 2, 3, 4},
+        {4},
+        {1, 2, 3, 4},
+        {1},
+        {1, 2, 3, 4}
+    },
+    [3] = {
+        {1, 2, 3, 4},
+        {4},
+        {1, 2, 3, 4},
+        {4},
+        {1, 2, 3, 4}
+    },
+    [4] = {
+        {1, 4},
+        {1, 4},
+        {1, 2, 3, 4},
+        {4},
+        {4}
+    },
+    [5] = {
+        {1, 2, 3, 4},
+        {1},
+        {1, 2, 3, 4},
+        {4},
+        {1, 2, 3, 4}
+    },
+    [6] = {
+        {1, 2, 3, 4},
+        {1},
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 2, 3, 4}
+    },
+    [7] = {
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 4},
+        {4},
+        {4}
+    },
+    [8] = {
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 2, 3, 4}
+    },
+    [9] = {
+        {1, 2, 3, 4},
+        {1, 4},
+        {1, 2, 3, 4},
+        {4},
+        {4}
+    },
 }
 
 -- back
@@ -117,27 +203,59 @@ local function spawnApple()
     while (isImpossible(apple.x, apple.y)) do apple.x, apple.y = math.random(30), math.random(30) end
 end
 
+local function initGame()
+
+    X, Y, tail, head = {}, {}, 1, 3
+    for i = 1, 3 do X[i], Y[i] = 6 + i, 23 end
+
+    snake = {len = 3, dir = 1}
+    apple = {x = 23, y = 23}
+
+    eat = false
+    lock = false
+    interval = 30
+    over = -4
+
+    for x = 1, 30 do
+        for y = 1, 30 do paintGrid(x, y, false) end
+    end
+
+    for i = 22, 26 do white[i] = {} end
+    for i = 1, 3 do paintGrid(X[i], Y[i], true) end
+
+    spawnApple()
+    drawApple(true)
+end
+
 local function onKeyEvent(event)
-    if (lock == false and event.phase == "down") then
-        if (event.keyName == "up") then
-            if (snake.dir == 3 or snake.dir == 1) then
-                snake.dir = 0
-                lock = true
+    if (event.phase == "down") then
+        if (interval < 0) then
+            if (event.keyName == "escape") then
+                os.exit()
+            elseif (event.keyName == "space" or event.keyName == "enter") then
+                initGame()
             end
-        elseif (event.keyName == "right") then
-            if (snake.dir == 0 or snake.dir == 2) then
-                snake.dir = 1
-                lock = true
-            end
-        elseif (event.keyName == "down") then
-            if (snake.dir == 1 or snake.dir == 3) then
-                snake.dir = 2
-                lock = true
-            end
-        elseif (event.keyName == "left") then
-            if (snake.dir == 2 or snake.dir == 0) then
-                snake.dir = 3
-                lock = true
+        elseif (lock == false) then
+            if (event.keyName == "up") then
+                if (snake.dir == 3 or snake.dir == 1) then
+                    snake.dir = 0
+                    lock = true
+                end
+            elseif (event.keyName == "right") then
+                if (snake.dir == 0 or snake.dir == 2) then
+                    snake.dir = 1
+                    lock = true
+                end
+            elseif (event.keyName == "down") then
+                if (snake.dir == 1 or snake.dir == 3) then
+                    snake.dir = 2
+                    lock = true
+                end
+            elseif (event.keyName == "left") then
+                if (snake.dir == 2 or snake.dir == 0) then
+                    snake.dir = 3
+                    lock = true
+                end
             end
         end
     end
@@ -154,7 +272,18 @@ local function onFrameEvent()
                 for i, x in ipairs(white[over]) do paintGrid(x, over, false) end
             end
             over = over + 1
-            interval = over > 30 and -1 or 5
+            interval = over > 30 and -1 or 3
+        elseif (over < 0) then
+            for x = 14, 17 do
+                for y = 6, 10 do paintGrid(x, y, false) end
+            end
+            if (over < -1) then
+                for y = 1, 5 do
+                    for _, x in ipairs(number[-over-1][y]) do paintGrid(13 + x, 5 + y, true) end
+                end
+            end
+            over = over + 1
+            interval = over < -1 and 30 or 5
         else
             local x, y = X[head], Y[head]
             if (snake.dir == 0) then y = y - 1
@@ -165,6 +294,13 @@ local function onFrameEvent()
 
             if (x < 1 or x > 30 or y < 1 or y > 30 or isImpossible(x, y)) then
                 drawApple(false)
+                snake.len = snake.len - 3
+                for i = 1, 4 do
+                    for y = 1, 5 do
+                        for _, x in ipairs(number[snake.len % 10][y]) do table.insert(white[21 + y], whiteX[i] + x) end
+                    end
+                    snake.len = math.floor(snake.len / 10)
+                end
                 over = 1
             else
                 moveHead(x, y)
@@ -178,6 +314,7 @@ local function onFrameEvent()
                 end
 
                 if (apple.x == x and apple.y == y) then
+                    snake.len = snake.len + 1
                     eat = true
                     drawApple(false)
                     spawnApple()
@@ -191,25 +328,13 @@ local function onFrameEvent()
     end
 end
 
-local function initGame()
-
-    X, Y, tail, head = {}, {}, 1, 3
-    for i = 1, 3 do X[i], Y[i] = 2 + i, 8 end
-
-    snake = {len = 3, dir = 1}
-    apple = {x = 11, y = 8}
-
-    eat = false
-    lock = false
-    interval = 30
-    over = 0
-
-    for i = 1, 3 do paintGrid(X[i], Y[i], true) end
-    drawApple(true)
-end
-
 -- action
 
-initGame()
+for x = 1, 30 do
+    for y = 1, 30 do paintGrid(x, y, true) end
+end
+for y, arrX in pairs(intro) do
+    for _, x in ipairs(arrX) do paintGrid(x, y, false) end
+end
 Runtime:addEventListener("key", onKeyEvent)
 Runtime:addEventListener("enterFrame", onFrameEvent)

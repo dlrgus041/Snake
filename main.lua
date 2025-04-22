@@ -1,15 +1,15 @@
 -- front
 
-local background1 = display.newRect(480, 480, 940, 940)
+local background1 = display.newRect(480, 480, 950, 950)
 background1:setFillColor(1, 1, 1)
 
-local background2 = display.newRect(480, 480, 910, 910)
+local background2 = display.newRect(480, 480, 940, 940)
 background2:setFillColor(0, 0, 0)
 
 local board = display.newGroup()
-for x = 1, 30 do
+for x = 1, 31 do
     local col = display.newGroup()
-    for y = 1, 30 do display.newRect(col, 30 + 15 * (2 * x - 1), 30 + 15 * (2 * y - 1), 30, 30) end
+    for y = 1, 31 do display.newRect(col, 15 + 15 * (2 * x - 1), 15 + 15 * (2 * y - 1), 30, 30) end
     board:insert(col)
 end
 
@@ -21,112 +21,125 @@ appleImg.isVisible = false
 
 -- intro
 local intro = {
-    [11] = {4, 5, 6, 7, 9, 12, 15, 16, 19, 22, 24, 25, 26, 27},
-    [12] = {4, 9, 12, 14, 17, 19, 21, 24},
-    [13] = {4, 5, 6, 7, 9, 10, 12, 14, 15, 16, 17, 19, 20, 24, 25, 26},
-    [14] = {7, 9, 11, 12, 14, 17, 19, 21, 24},
-    [15] = {4, 5, 6, 7, 9, 12, 14, 17, 19, 22, 24, 25, 26, 27},
-    [23] = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22},
-    [24] = {9, 22},
-    [25] = {9, 22},
-    [26] = {9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22},
+    [9] = {3, 4, 5, 8, 12, 15, 16, 17, 20, 24, 26, 27, 28, 29, 30},
+    [10] = {2, 6, 8, 12, 14, 18, 20, 23, 26},
+    [11] = {2, 8, 9, 12, 14, 18, 20, 22, 26},
+    [12] = {3, 4, 5, 8, 10, 12, 14, 15, 16, 17, 18, 20, 21, 26, 27, 28, 29},
+    [13] = {6, 8, 11, 12, 14, 18, 20, 22, 26},
+    [14] = {2, 6, 8, 12, 14, 18, 20, 23, 26},
+    [15] = {3, 4, 5, 8, 12, 14, 18, 20, 24, 26, 27, 28, 29, 30},
 }
 
 -- game over
 local white = {
-    [2] = {4, 5, 6, 12, 17, 21, 24, 25, 26, 27, 28},
-    [3] = {3, 7, 11, 13, 17, 18, 20, 21, 24, 28},
-    [4] = {3, 10, 14, 17, 19, 21, 24},
-    [5] = {3, 10, 11, 12, 13, 14, 17, 19, 21, 24, 25, 26},
-    [6] = {3, 6, 7, 10, 14, 17, 21, 24},
-    [7] = {3, 7, 10, 14, 17, 21, 24, 28},
-    [8] = {4, 5, 6, 10, 14, 17, 21, 24, 25, 26, 27, 28},
-    [11] = {4, 5, 6, 10, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27},
-    [12] = {3, 7, 10, 14, 17, 21, 24, 28},
-    [13] = {3, 7, 10, 14, 17, 24, 28},
-    [14] = {3, 7, 10, 14, 17, 18, 19, 24, 25, 26, 27},
-    [15] = {3, 7, 11, 13, 17, 24, 26},
-    [16] = {3, 7, 11, 13, 17, 21, 24, 27},
-    [17] = {4, 5, 6, 12, 17, 18, 19, 20, 21, 24, 28},
-    [22] = {}, --{5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
-    [23] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
-    [24] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
-    [25] = {}, --{5, 8, 11, 14, 17, 20, 23, 26},
-    [26] = {}, --{5, 6, 7, 8, 11, 12, 13, 14, 17, 18, 19, 20, 23, 24, 25, 26},
+    [2] = {3, 4, 5, 11, 12, 13, 18, 22, 26, 27, 28, 29, 30},
+    [3] = {2, 6, 10, 14, 18, 22, 26},
+    [4] = {2, 10, 14, 18, 19, 21, 22, 26},
+    [5] = {2, 5, 6, 10, 11, 12, 13, 14, 18, 20, 22, 26, 27, 28, 29},
+    [6] = {2, 6, 10, 14, 18, 22, 26},
+    [7] = {2, 6, 10, 14, 18, 22, 26},
+    [8] = {3, 4, 5, 10, 14, 18, 22, 26, 27, 28, 29, 30},
+    [10] = {3, 4, 5, 10, 14, 18, 19, 20, 21, 22, 26, 27, 28, 29},
+    [11] = {2, 6, 10, 14, 18, 26, 30},
+    [12] = {2, 6, 10, 14, 18, 26, 30},
+    [13] = {2, 6, 10, 14, 18, 19, 20, 21, 26, 27, 28, 29},
+    [14] = {2, 6, 11, 13, 18, 26, 28},
+    [15] = {2, 6, 11, 13, 18, 26, 29},
+    [16] = {3, 4, 5, 12, 18, 19, 20, 21, 22, 26, 30},
 }
 
-local whiteX = {22, 16, 10, 4}
+local whiteX = {19, 13, 7}
 
 local number = {
     [0] = {
-        {1, 2, 3, 4},
-        {1, 4},
-        {1, 4},
-        {1, 4},
-        {1, 2, 3, 4}
+        {2, 3, 4},
+        {1, 5},
+        {1, 5},
+        {1, 5},
+        {1, 5},
+        {1, 5},
+        {2, 3, 4},
     },
     [1] = {
+        {3},
         {2, 3},
-        {2, 3},
-        {2, 3},
-        {2, 3},
-        {2, 3},
+        {1, 3},
+        {3},
+        {3},
+        {3},
+        {1, 2, 3, 4, 5},
     },
     [2] = {
-        {1, 2, 3, 4},
+        {2, 3, 4},
+        {1, 5},
+        {5},
         {4},
-        {1, 2, 3, 4},
-        {1},
-        {1, 2, 3, 4}
+        {3},
+        {2},
+        {1, 2, 3, 4, 5},
     },
     [3] = {
-        {1, 2, 3, 4},
-        {4},
-        {1, 2, 3, 4},
-        {4},
-        {1, 2, 3, 4}
+        {2, 3, 4},
+        {1, 5},
+        {5},
+        {3, 4},
+        {5},
+        {1, 5},
+        {2, 3, 4},
     },
     [4] = {
+        {3, 4},
+        {2, 4},
         {1, 4},
-        {1, 4},
-        {1, 2, 3, 4},
+        {1, 2, 3, 4, 5},
         {4},
-        {4}
+        {4},
+        {4},
     },
     [5] = {
-        {1, 2, 3, 4},
+        {1, 2, 3, 4, 5},
+        {1},
         {1},
         {1, 2, 3, 4},
-        {4},
-        {1, 2, 3, 4}
+        {5},
+        {1, 5},
+        {2, 3, 4},
     },
     [6] = {
-        {1, 2, 3, 4},
+        {2, 3, 4},
+        {1, 5},
         {1},
         {1, 2, 3, 4},
-        {1, 4},
-        {1, 2, 3, 4}
+        {1, 5},
+        {1, 5},
+        {2, 3, 4},
     },
     [7] = {
-        {1, 2, 3, 4},
-        {1, 4},
-        {1, 4},
-        {4},
-        {4}
+        {1, 2, 3, 4, 5},
+        {1, 5},
+        {1, 5},
+        {5},
+        {5},
+        {5},
+        {5},
     },
     [8] = {
-        {1, 2, 3, 4},
-        {1, 4},
-        {1, 2, 3, 4},
-        {1, 4},
-        {1, 2, 3, 4}
+        {2, 3, 4},
+        {1, 5},
+        {1, 5},
+        {2, 3, 4},
+        {1, 5},
+        {1, 5},
+        {2, 3, 4},
     },
     [9] = {
-        {1, 2, 3, 4},
-        {1, 4},
-        {1, 2, 3, 4},
-        {4},
-        {4}
+        {2, 3, 4},
+        {1, 5},
+        {1, 5},
+        {2, 3, 4, 5},
+        {5},
+        {1, 5},
+        {2, 3, 4},
     },
 }
 
@@ -166,21 +179,21 @@ end
 
 local function drawApple(flag)
     if (flag == true) then
-        appleImg.x = 30 + 15 * (2 * apple.x - 1)
-        appleImg.y = 30 + 15 * (2 * apple.y - 1)
+        appleImg.x = 15 + 15 * (2 * apple.x - 1)
+        appleImg.y = 15 + 15 * (2 * apple.y - 1)
     end
     appleImg.isVisible = flag
 end
 
 local function moveHead(x, y)
     head = head + 1
-    if (head > 900) then head = 1 end
+    if (head > 961) then head = 1 end
     X[head], Y[head] = x, y
 end
 
 local function moveTail()
     tail = tail + 1
-    if (tail > 900) then tail = 1 end
+    if (tail > 961) then tail = 1 end
 end
 
 local function isImpossible(x, y)
@@ -189,7 +202,7 @@ local function isImpossible(x, y)
             if (X[i] == x and Y[i] == y) then return true end
         end
     else
-        for i = tail, 900 do
+        for i = tail, 961 do
             if (X[i] == x and Y[i] == y) then return true end
         end
         for i = 1, head do
@@ -200,31 +213,43 @@ local function isImpossible(x, y)
 end
 
 local function spawnApple()
-    while (isImpossible(apple.x, apple.y)) do apple.x, apple.y = math.random(30), math.random(30) end
+    while (isImpossible(apple.x, apple.y)) do apple.x, apple.y = math.random(31), math.random(31) end
+end
+
+local function clear()
+    for x = 13, 19 do
+        for y = 5, 26 do paintGrid(x, y, false) end
+    end
 end
 
 local function initGame()
 
     X, Y, tail, head = {}, {}, 1, 3
-    for i = 1, 3 do X[i], Y[i] = 6 + i, 23 end
+    for i = 1, 3 do X[i], Y[i] = 5 + i, 24 end
 
     snake = {len = 3, dir = 1}
-    apple = {x = 23, y = 23}
+    apple = {x = 24, y = 24}
 
     eat = false
-    lock = false
+    lock = true
     interval = 30
     over = -4
 
-    for x = 1, 30 do
-        for y = 1, 30 do paintGrid(x, y, false) end
+    for x = 1, 31 do
+        for y = 1, 31 do paintGrid(x, y, false) end
     end
 
-    for i = 22, 26 do white[i] = {} end
+    for i = 21, 27 do white[i] = {} end
     for i = 1, 3 do paintGrid(X[i], Y[i], true) end
 
     spawnApple()
     drawApple(true)
+
+    for x = 13, 19 do board[x][24]:setFillColor(0.5, 0.5, 0.5) end
+    board[17][22]:setFillColor(0.5, 0.5, 0.5)
+    board[17][26]:setFillColor(0.5, 0.5, 0.5)
+    board[18][23]:setFillColor(0.5, 0.5, 0.5)
+    board[18][25]:setFillColor(0.5, 0.5, 0.5)
 end
 
 local function onKeyEvent(event)
@@ -266,24 +291,29 @@ local function onFrameEvent()
     if (interval > 0) then interval = interval - 1 end
 
     if (interval == 0) then
-        if (over > 0) then
-            for x = 1, 30 do paintGrid(x, over, true) end
+        if (over > 31) then
+            interval = -1
+        elseif (over > 0) then
+            for x = 1, 31 do paintGrid(x, over, true) end
             if white[over] then
                 for i, x in ipairs(white[over]) do paintGrid(x, over, false) end
             end
             over = over + 1
-            interval = over > 30 and -1 or 3
-        elseif (over < 0) then
-            for x = 14, 17 do
-                for y = 6, 10 do paintGrid(x, y, false) end
+            interval = 3
+        elseif (over == -1) then
+            clear()
+            over = 0
+            interval = 5
+            lock = false
+        elseif (over < -1) then
+            for x = 14, 18 do
+                for y = 5, 11 do paintGrid(x, y, false) end
             end
-            if (over < -1) then
-                for y = 1, 5 do
-                    for _, x in ipairs(number[-over-1][y]) do paintGrid(13 + x, 5 + y, true) end
-                end
+            for y = 1, 7 do
+                for _, x in ipairs(number[-over-1][y]) do paintGrid(13 + x, 5 + y, true) end
             end
             over = over + 1
-            interval = over < -1 and 30 or 5
+            interval = 30
         else
             local x, y = X[head], Y[head]
             if (snake.dir == 0) then y = y - 1
@@ -292,12 +322,12 @@ local function onFrameEvent()
             elseif (snake.dir == 3) then x = x - 1
             end
 
-            if (x < 1 or x > 30 or y < 1 or y > 30 or isImpossible(x, y)) then
+            if (x < 1 or x > 31 or y < 1 or y > 31 or isImpossible(x, y)) then
                 drawApple(false)
                 snake.len = snake.len - 3
-                for i = 1, 4 do
-                    for y = 1, 5 do
-                        for _, x in ipairs(number[snake.len % 10][y]) do table.insert(white[21 + y], whiteX[i] + x) end
+                for i = 1, 3 do
+                    for y = 1, 7 do
+                        for _, x in ipairs(number[snake.len % 10][y]) do table.insert(white[20 + y], whiteX[i] + x) end
                     end
                     snake.len = math.floor(snake.len / 10)
                 end
@@ -330,8 +360,8 @@ end
 
 -- action
 
-for x = 1, 30 do
-    for y = 1, 30 do paintGrid(x, y, true) end
+for x = 1, 31 do
+    for y = 1, 31 do paintGrid(x, y, true) end
 end
 for y, arrX in pairs(intro) do
     for _, x in ipairs(arrX) do paintGrid(x, y, false) end

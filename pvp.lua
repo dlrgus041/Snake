@@ -8,6 +8,10 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
+local const = require("constants")
+
+local keyboard = {}
+
 local board
 local appleImg
 local applePos
@@ -37,11 +41,10 @@ local function paintApple(flag, bool)
 	appleImg[flag].isVisible = bool
 end
 
-local function moveHead(x, y, player)
+local function moveHead(a, b, player)
 	p[player].head = p[player].head + 1
 	if (p[player].head > 961) then p[player].head = 1 end
-	p[player][p[player].head].x = x
-	p[player][p[player].head].y = y
+	p[player][p[player].head] = {x = a, y = b}
 end
 
 local function moveTail(x, y, player)
@@ -91,6 +94,16 @@ local function clear()
 	end
 end
 
+-- local function initPos(player)
+-- 	p[player].tail = 1
+-- 	p[player].head = 3
+-- 	p[player].len = 3
+-- 	p[player].dir = 2
+-- 	p[player].eat = false
+-- 	p[player].lock = true
+-- 	p[player].interval = -1
+-- end
+
 local function initGame()
 	applePos = {{x = 8, y = 24}, {x = 24, y = 24}, {x = 16, y = 28}}
 	p = {
@@ -135,6 +148,77 @@ local function initGame()
 	board[26][17]:setFillColor(0, 0, 1, 0.5)
 end
 	
+local function onKeyClick(event)
+	keyboard[event.keyName] = event.phase == "down"
+end
+
+local function onKeyEvent()
+	if (p[1].lock == false) then
+		if keyboard["w"] then
+			if (p[1].dir == 3 or p[1].dir == 1) then
+				p[1].dir = 0
+				p[1].lock = true
+			end
+		elseif keyboard["d"] then
+			if (p[1].dir == 0 or p[1].dir == 2) then
+				p[1].dir = 1
+				p[1].lock = true
+			end
+		elseif keyboard["s"] then
+			if (p[1].dir == 1 or p[1].dir == 3) then
+				p[1].dir = 2
+				p[1].lock = true
+			end
+		elseif keyboard["a"] then
+			if (p[1].dir == 2 or p[1].dir == 0) then
+				p[1].dir = 3
+				p[1].lock = true
+			end
+		end
+	end
+	if (p[2].lock == false) then
+		if keyboard["up"] then
+			if (p[2].dir == 3 or p[2].dir == 1) then
+				p[2].dir = 0
+				p[2].lock = true
+			end
+		elseif keyboard["right"] then
+			if (p[2].dir == 0 or p[2].dir == 2) then
+				p[2].dir = 1
+				p[2].lock = true
+			end
+		elseif keyboard["down"] then
+			if (p[2].dir == 1 or p[2].dir == 3) then
+				p[2].dir = 2
+				p[2].lock = true
+			end
+		elseif keyboard["left"] then
+			if (p[2].dir == 2 or p[2].dir == 0) then
+				p[2].dir = 3
+				p[2].lock = true
+			end
+		end
+	end
+end
+
+local function onFrameEvent(player)
+	if (p[player].interval > 0) then
+		p[player].interval = p[player].interval - 1
+	elseif (p[player].interval == 0) then
+		local x = p[player][p[player].head].x
+		local y = p[player][p[player].head].y
+		if (p[player].dir == 0) then y = y - 1
+		elseif (p[player].dir == 1) then x = x + 1
+		elseif (p[player].dir == 2) then y = y + 1
+		elseif (p[player].dir == 3) then x = x - 1
+		end
+
+		if (x < 1 or x > 31 or y < 1 or y > 31 or collideSnake(x, y)) then
+			paintApple
+
+		p[player].interval = 5
+	end
+end
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions

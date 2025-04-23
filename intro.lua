@@ -13,7 +13,7 @@ local function onKeyEvent(event)
 		if (event.keyName == "escape") then
 			os.exit()
 		elseif (event.keyName == "space" or event.keyName == "enter") then
-			composer.gotoScene("pvp")
+			composer.gotoScene("single")
 		end
 	end
 end
@@ -89,7 +89,7 @@ function scene:hide( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
 		Runtime:removeEventListener("key", onKeyEvent)
-		-- composer.remove("intro")
+		composer.removeScene("intro")
 	end
 end
 

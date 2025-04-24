@@ -13,7 +13,7 @@ local function onKeyEvent(event)
 		if (event.keyName == "escape") then
 			os.exit()
 		elseif (event.keyName == "space" or event.keyName == "enter") then
-			composer.gotoScene("single")
+			composer.gotoScene("cpu")
 		end
 	end
 end
